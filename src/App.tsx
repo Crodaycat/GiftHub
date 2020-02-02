@@ -1,26 +1,50 @@
+import { createBrowserHistory } from 'history';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from 'react-redux';
+import { Redirect, Route, Router, Switch } from 'react-router-dom';
 
-const App: React.FC = () => {
+import config from './auth_config.json';
+import Home from './components/home/Home';
+import { Auth0Provider } from './react-auth0-spa';
+import store from './redux/store';
+
+const history = createBrowserHistory();
+
+const onAuthRedirectCallback = (redirectResult?: RedirectLoginResult) => {
+  console.log(
+    'auth0 onRedirectCallback called with redirectState %o',
+    redirectResult
+  );
+
+  // Clears auth0 query string parameters from url
+  const targetUrl =
+    redirectResult &&
+    redirectResult.appState &&
+    redirectResult.appState.targetUrl
+      ? redirectResult.appState.targetUrl
+      : window.location.pathname;
+
+  history.push(targetUrl);
+};
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Auth0Provider
+        domain={config.domain}
+        client_id={config.clientId}
+        redirect_uri={window.location.origin}
+        onRedirectCallback={onAuthRedirectCallback}
+      >
+        <Router history={history}>
+          <Switch>
+            <Route path='/home'>
+              <Home />
+            </Route>
+            <Redirect from='/' to='/home' />
+          </Switch>
+        </Router>
+      </Auth0Provider>
+    </Provider>
   );
 }
-
-export default App;

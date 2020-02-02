@@ -1,0 +1,16 @@
+.item-content {
+  border: 1px solid rgb(200, 200, 200);
+  width: 224px;
+  height: 340px;
+}
+
+.item-image {
+  width: 224px;
+  height: 224px;
+}
+
+.item-texts-contet {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

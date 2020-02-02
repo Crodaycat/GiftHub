@@ -1,0 +1,14 @@
+.items-container {
+  display: grid;
+  padding: 10px 50px;
+  grid-row-gap: 20px;
+  grid-column-gap: 5px;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 240px);
+}
+
+.loading-spinner-container {
+  text-align: center;
+  margin-top: 120px;
+}
+
