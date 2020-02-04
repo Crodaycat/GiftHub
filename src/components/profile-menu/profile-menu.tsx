@@ -10,7 +10,7 @@ import { useAuth0 } from '../../react-auth0-spa';
 
 export default function ProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  const auth0Context = useAuth0();
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -58,7 +58,9 @@ export default function ProfileMenu() {
     >
       <Button
         onClick={() => {
-          loginWithRedirect({});
+          if (auth0Context) {
+            auth0Context.loginWithRedirect();
+          }
         }}
       >
         Login
@@ -67,5 +69,7 @@ export default function ProfileMenu() {
     </ButtonGroup>
   );
 
-  return isAuthenticated ? renderMenu : renderButtons;
+  return auth0Context && auth0Context.isAuthenticated
+    ? renderMenu
+    : renderButtons;
 }
