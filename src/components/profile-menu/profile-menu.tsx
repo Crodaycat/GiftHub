@@ -7,10 +7,12 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import React from 'react';
 
 import { useAuth0 } from '../../react-auth0-spa';
+import { useHistory } from 'react-router-dom';
 
 export default function ProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const auth0Context = useAuth0();
+  const history = useHistory();
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -59,7 +61,9 @@ export default function ProfileMenu() {
       <Button
         onClick={() => {
           if (auth0Context) {
-            auth0Context.loginWithRedirect();
+            auth0Context.loginWithRedirect({
+              redirect_uri: `${window.location.origin}/login?goback=${history.location.pathname}`
+            });
           }
         }}
       >
