@@ -59,13 +59,11 @@ export default function ProfileMenu() {
       aria-label='text primary button group'
     >
       <Button
-        onClick={() => {
-          if (auth0Context) {
-            auth0Context.loginWithRedirect({
-              redirect_uri: `${window.location.origin}/login?goback=${history.location.pathname}`
-            });
-          }
-        }}
+        onClick={() =>
+          auth0Context?.loginWithRedirect({
+            redirect_uri: `${window.location.origin}/login?goback=${history.location.pathname}`
+          })
+        }
       >
         Login
       </Button>
