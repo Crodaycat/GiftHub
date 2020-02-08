@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from './components/home/Home';
 import Login from './components/login/login';
@@ -17,6 +17,7 @@ export default function App() {
           <Route path='/login'>
             <Login />
           </Route>
+          <Redirect from='/' to='/home' />
         </Switch>
       </BrowserRouter>
     </Provider>

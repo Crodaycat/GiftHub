@@ -6,19 +6,10 @@ import App from './App';
 import config from './auth_config.json';
 import { Auth0Provider } from './react-auth0-spa';
 
-const onAuthRedirectCallback = (redirectResult?: RedirectLoginResult) => {
-  console.log(
-    'auth0 onRedirectCallback called with redirectState %o',
-    redirectResult
-  );
-
-  // Clears auth0 query string parameters from url
-  const targetUrl =
-    redirectResult &&
-    redirectResult.appState &&
-    redirectResult.appState.targetUrl
-      ? redirectResult.appState.targetUrl
-      : `${window.location.pathname}`;
+const onAuthRedirectCallback = (appState?: any) => {
+  const targetUrl = appState?.targetUrl
+    ? appState.targetUrl
+    : `${window.location.pathname}`;
 
   history.push(targetUrl);
 };

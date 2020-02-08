@@ -1,4 +1,5 @@
 import createAuth0Client from '@auth0/auth0-spa-js';
+import QueryString from 'query-string';
 import React, { useContext, useEffect, useState } from 'react';
 
 export interface Auth0RedirectState {
@@ -22,7 +23,7 @@ interface Auth0Context {
 }
 interface Auth0ProviderOptions {
   children: React.ReactElement;
-  onRedirectCallback(result: RedirectLoginResult): void;
+  onRedirectCallback(appState: any): void;
   initOptions: Auth0ClientOptions;
 }
 
@@ -51,8 +52,23 @@ export function Auth0Provider({
         window.location.search.includes('code=') &&
         window.location.search.includes('state=')
       ) {
+        const queryParams = QueryString.parse(window.location.search);
+
         const { appState } = await auth0FromHook.handleRedirectCallback();
-        onRedirectCallback(appState);
+
+        if (queryParams.goback) {
+          const callBack = queryParams.goback as string;
+
+          if (appState) {
+            appState.targetUrl = `${appState.targetUrl}?${callBack}`;
+          } else {
+            onRedirectCallback({
+              targetUrl: `/login?${callBack}`
+            });
+          }
+        } else {
+          onRedirectCallback(appState);
+        }
       }
 
       const isAuthenticated = await auth0FromHook.isAuthenticated();
