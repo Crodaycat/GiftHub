@@ -5,9 +5,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useAuth0 } from '../../react-auth0-spa';
-import { useHistory } from 'react-router-dom';
 
 export default function ProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
