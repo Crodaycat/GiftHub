@@ -13,8 +13,8 @@
 }
 
 .container-icon {
+  cursor: pointer;
   height: 100%;
-  pointer-events: none;
-  margin-left: .5rem;
-  margin-right: .5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }

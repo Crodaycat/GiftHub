@@ -11,8 +11,9 @@ interface AutocompleteProps {
 }
 
 export default function Autocomplete(props: AutocompleteProps) {
-  
-  function onChangeText(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
+  function onChangeText(
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) {
     const newText = event.target.value;
 
     props.onChangeText(newText);
@@ -24,13 +25,19 @@ export default function Autocomplete(props: AutocompleteProps) {
     }
   }
 
+  function onSubmitClick() {
+    if (props.text) {
+      props.onChangeSelection(props.text);
+    }
+  }
+
   return (
-    <div className="main-container">
-      <div className="container-icon">
+    <div className='main-container'>
+      <div className='container-icon' onClick={onSubmitClick}>
         <SearchIcon />
       </div>
-      <InputBase 
-        placeholder="buscar"
+      <InputBase
+        placeholder='buscar'
         value={props.text}
         style={{ width: '100%' }}
         onChange={onChangeText}
