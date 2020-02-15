@@ -34,7 +34,7 @@ export default function IAppBar(props: IAppBarProps) {
     <AppBar>
       <Toolbar className='bar-content'>
         <Typography variant='h6' color='inherit'>
-          GiftHub
+          Mercado Luis
         </Typography>
         <div className={classes.grow}></div>
         <Autocomplete
